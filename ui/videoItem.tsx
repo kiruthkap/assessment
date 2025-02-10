@@ -6,22 +6,14 @@ import { VideoItemProps } from '../types';
 import { videoItemStyle } from '../styles';
 
 const VideoItem: React.FC<VideoItemProps> = ({ item, isVisible }) => {
-    const opacity = useSharedValue(0);
-    const scale = useSharedValue(0.8);
+    const scale = useSharedValue(isVisible ? 1 : 0.9);
     const style = videoItemStyle;
 
     useEffect(() => {
-        if (isVisible) {
-            opacity.value = withTiming(1, { duration: 500 });
-            scale.value = withTiming(1, { duration: 500 });
-        } else {
-            opacity.value = withTiming(0, { duration: 300 });
-            scale.value = withTiming(0.8, { duration: 300 });
-        }
+        scale.value = withTiming(isVisible ? 1 : 0.9, { duration: 300 });
     }, [isVisible]);
 
     const animatedStyle = useAnimatedStyle(() => ({
-        opacity: opacity.value,
         transform: [{ scale: scale.value }],
     }));
 
@@ -45,5 +37,3 @@ const VideoItem: React.FC<VideoItemProps> = ({ item, isVisible }) => {
 };
 
 export default VideoItem;
-
-

@@ -82,7 +82,7 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey }) => {
       onViewableItemsChanged={onViewableItemsChanged}
       onEndReached={fetchNextSetData}
       onEndReachedThreshold={0.5}
-      ListEmptyComponent={isLoading && !refreshing ? loaderView() : emptyView()}
+      ListEmptyComponent={!refreshing ? isLoading ? loaderView() : emptyView() : null}
       style={style.container}
       refreshControl={
         <RefreshControl refreshing={isLoading && refreshing} onRefresh={handleRefresh} />
