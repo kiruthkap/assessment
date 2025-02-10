@@ -6,7 +6,7 @@ import { clearVideos, fetchVideos, setPage } from '../features/videoSlice';
 import { RootState } from '../features/store';
 import { VideoListProps } from '../types';
 import Loader from './loader';
-import { predefinedTexts } from '../constants';
+import { apiData, predefinedTexts } from '../constants';
 import { videoListStyle } from '../styles';
 
 const VideoList: React.FC<VideoListProps> = ({ tabKey }) => {
@@ -19,6 +19,7 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey }) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const defaultTexts = predefinedTexts;
+  const apiDefaultData = apiData;
   const style = videoListStyle;
 
   const viewabilityConfig = { viewAreaCoveragePercentThreshold: 80 };
@@ -46,10 +47,10 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey }) => {
 
   const handleRefresh = useCallback(() => {
     setRefreshing(true);
-    dispatch(setPage(defaultTexts.initialPage));
+    dispatch(setPage(apiDefaultData.initialPage));
     dispatch(clearVideos());
     dispatch(fetchVideos({
-      page: defaultTexts.initialPage,
+      page: apiDefaultData.initialPage,
       tab: parseInt(tabKey)
     }));
     const timeout = setTimeout(() => setRefreshing(false), 1000);
