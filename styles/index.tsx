@@ -83,6 +83,7 @@ export const videoItemStyle = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         paddingVertical: 8,
+        paddingLeft: 4,
     },
     videoWrapper: {
         width: '100%',
