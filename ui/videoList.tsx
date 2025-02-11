@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Text, View, Animated, RefreshControl, ViewToken } from 'react-native';
 import VideoItem from './videoItem';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearVideos, fetchVideos, setPage } from '../features/videoSlice';
+import { clearVideos, fetchVideos, setPage, setPageRefresh } from '../features/videoSlice';
 import { RootState } from '../features/store';
 import { VideoListProps } from '../types';
 import Loader from './loader';
@@ -16,9 +16,9 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey, scrollY }) => {
   const videos = videosReducerData?.videos || [];
   const page = videosReducerData?.page || 0;
   const isLoading = videosReducerData?.loading || false;
+  const refreshing = videosReducerData?.refreshing || false;
 
   const [visibleVideoId, setVisibleVideoId] = useState<number | null>(null);
-  const [refreshing, setRefreshing] = useState(false);
 
   const defaultTexts = predefinedTexts;
   const apiDefaultData = apiData;
@@ -52,15 +52,13 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey, scrollY }) => {
   }, [videos, page]);
 
   const handleRefresh = useCallback(() => {
-    setRefreshing(true);
+    dispatch(setPageRefresh(true));
     dispatch(setPage(apiDefaultData.initialPage));
     dispatch(clearVideos());
     dispatch(fetchVideos({
       page: apiDefaultData.initialPage,
       tab: parseInt(tabKey)
     }));
-    const timeout = setTimeout(() => setRefreshing(false), 1000);
-    clearTimeout(timeout);
   }, [dispatch, tabKey]);
 
   const emptyView = () => {
