@@ -12,3 +12,12 @@ export const apiData = {
     defaultLimit: 3,
     apiError: 'Failed to fetch videos',
 }
+
+export const animationData = {
+    HEADER_MAX_HEIGHT: 80,
+    HEADER_MIN_HEIGHT: 50,
+    IMAGE_MAX_SIZE: 40,
+    IMAGE_MIN_SIZE: 20,
+    TITLE_MAX_SIZE: 24,
+    TITLE_MIN_SIZE: 16,
+}

@@ -31,12 +31,18 @@ export const loaderStyle = StyleSheet.create({
 
 export const headerStyle = StyleSheet.create({
     header: {
-        flexDirection: 'row',
-        height: 50,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
         backgroundColor: '#f4511e',
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'row',
+        paddingHorizontal: 16,
+        zIndex: 10,
     },
+    image: { borderRadius: 20, marginRight: 10 },
     imageView: {
         borderRadius: 50
     },
@@ -67,7 +73,7 @@ export const videoListStyle = StyleSheet.create({
 export const videoItemStyle = StyleSheet.create({
     container: {
         width: '100%',
-        height: 600,
+        height: 300,
     },
     titleContainer: {
         paddingVertical: 8,
@@ -79,7 +85,7 @@ export const videoItemStyle = StyleSheet.create({
     },
     videoWrapper: {
         width: '100%',
-        height: 550,
+        height: 250,
     },
     video: {
         width: '100%',

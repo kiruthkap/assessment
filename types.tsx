@@ -10,8 +10,13 @@ export interface Video {
     tab: number;
 }
 
+export interface TabViewProps {
+    scrollY: Animated.Value;
+}
+
 export interface VideoListProps {
     tabKey: string;
+    scrollY: Animated.Value;
 }
 
 export interface VideoItemProps {
@@ -33,5 +38,5 @@ export interface ApiParam {
 }
 
 export interface HeaderProps {
-    headerTranslate: Animated.AnimatedInterpolation<number>;
+    scrollY: Animated.Value;
 }

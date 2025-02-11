@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { FlatList, RefreshControl, Text, View, ViewToken } from 'react-native';
+import { Text, View, Animated, RefreshControl, ViewToken } from 'react-native';
 import VideoItem from './videoItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearVideos, fetchVideos, setPage } from '../features/videoSlice';
@@ -9,14 +9,14 @@ import Loader from './loader';
 import { apiData, predefinedTexts } from '../constants';
 import { videoListStyle } from '../styles';
 
-const VideoList: React.FC<VideoListProps> = ({ tabKey }) => {
+const VideoList: React.FC<VideoListProps> = ({ tabKey, scrollY }) => {
   const dispatch = useDispatch();
 
   const videosReducerData = useSelector((state: RootState) => state?.videoReducer);
   const videos = videosReducerData?.videos || [];
   const page = videosReducerData?.page || 0;
   const isLoading = videosReducerData?.loading || false;
-  
+
   const [visibleVideoId, setVisibleVideoId] = useState<number | null>(null);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -72,7 +72,7 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey }) => {
   const loaderView = () => (<Loader />);
 
   return (
-    <FlatList
+    <Animated.FlatList
       data={videos}
       keyExtractor={(item) => item?.id?.toString()}
       renderItem={({ item }) => (
@@ -93,6 +93,10 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey }) => {
       refreshControl={
         <RefreshControl refreshing={isLoading && refreshing} onRefresh={handleRefresh} />
       }
+      onScroll={Animated.event(
+        [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+        { useNativeDriver: false }
+      )}
     />
   );
 };
