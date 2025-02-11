@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Text, View, Animated, RefreshControl, ViewToken } from 'react-native';
+import { Text, View, Animated, RefreshControl, ViewToken, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import VideoItem from './videoItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearVideos, fetchVideos, setPage, setPageRefresh } from '../features/videoSlice';
@@ -69,6 +69,19 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey, scrollY }) => {
 
   const loaderView = () => (<Loader />);
 
+  const hendlePaginationBasedOnScroll = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+      const endReached =
+        layoutMeasurement.height + contentOffset.y >= contentSize.height - 50;
+
+      if (endReached && !isLoading && videos?.length > 0) {
+        fetchNextSetData();
+      }
+    },
+    [dispatch, page, isLoading, videos]
+  );
+
   return (
     <Animated.FlatList
       data={videos}
@@ -84,7 +97,7 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey, scrollY }) => {
       showsVerticalScrollIndicator={false}
       viewabilityConfig={viewabilityConfig}
       onViewableItemsChanged={onViewableItemsChanged}
-      onEndReached={fetchNextSetData}
+      onMomentumScrollEnd={hendlePaginationBasedOnScroll}
       onEndReachedThreshold={0.5}
       ListEmptyComponent={!refreshing ? isLoading ? loaderView() : emptyView() : null}
       style={style.container}
