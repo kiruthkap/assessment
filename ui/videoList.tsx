@@ -11,10 +11,12 @@ import { videoListStyle } from '../styles';
 
 const VideoList: React.FC<VideoListProps> = ({ tabKey }) => {
   const dispatch = useDispatch();
+
   const videosReducerData = useSelector((state: RootState) => state?.videoReducer);
   const videos = videosReducerData?.videos || [];
   const page = videosReducerData?.page || 0;
   const isLoading = videosReducerData?.loading || false;
+  
   const [visibleVideoId, setVisibleVideoId] = useState<number | null>(null);
   const [refreshing, setRefreshing] = useState(false);
 

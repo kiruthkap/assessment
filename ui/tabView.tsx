@@ -14,12 +14,14 @@ const { width } = Dimensions.get('window');
 const TabViewComponent: React.FC = () => {
     const style = appStyle;
     const defaultValues = apiData;
+
     const [index, setIndex] = useState(0);
     const [routes] = useState([
         { key: '0', title: 'General' },
         { key: '1', title: 'News' },
         { key: '2', title: 'Comedy' },
     ]);
+    
     const dispatch = useDispatch();
     const page: number = useSelector((state: RootState) => state?.videoReducer?.page || 0);
 

@@ -31,7 +31,7 @@ const Header: React.FC = () => {
         <Animated.View style={[style.header, { height: headerHeight }]}>
             <Animated.Image
                 source={{ uri: predefinedTexts.headerImageUrl }}
-                style={{ width: imageSize, height: imageSize, borderRadius: 50 }}
+                style={[style.imageView, { width: imageSize, height: imageSize }]}
             />
             <Animated.Text style={[style.headerText, { fontSize: titleSize }]}>
                 {defaultTexts.title}

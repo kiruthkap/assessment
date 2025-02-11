@@ -37,6 +37,9 @@ export const headerStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    imageView: {
+        borderRadius: 50
+    },
     headerText: {
         left: 8,
         color: '#fff',
