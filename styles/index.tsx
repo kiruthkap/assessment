@@ -11,8 +11,9 @@ export const appStyle = StyleSheet.create({
         backgroundColor: '#f4511e',
     },
     indicatorStyle: {
-        backgroundColor: 'black'
-    }
+        backgroundColor: '#000',
+        height: 4,
+    },
 });
 
 export const loaderStyle = StyleSheet.create({
@@ -44,7 +45,6 @@ export const headerStyle = StyleSheet.create({
 
 export const videoListStyle = StyleSheet.create({
     container: {
-        padding: 12,
         marginBottom: 20
     },
     noVideoContainer: {
@@ -62,11 +62,19 @@ export const videoListStyle = StyleSheet.create({
 export const videoItemStyle = StyleSheet.create({
     container: {
         width: '100%',
-        height: 250,
+        height: 600,
+    },
+    titleContainer: {
+        paddingVertical: 8,
+    },
+    titleStyle: {
+        color: '#000',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
     videoWrapper: {
         width: '100%',
-        height: 250,
+        height: 550,
     },
     video: {
         width: '100%',

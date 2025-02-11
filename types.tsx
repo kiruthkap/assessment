@@ -24,6 +24,7 @@ export interface VideoState {
     loading: boolean;
     error: string | null;
     page: number;
+    refreshing: boolean;
 }
 
 export interface ApiParam {

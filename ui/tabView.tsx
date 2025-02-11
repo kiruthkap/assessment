@@ -38,6 +38,7 @@ const TabViewComponent: React.FC = () => {
 
     const onTabChange = (tabKey: number) => {
         setIndex(tabKey);
+        setVideosBasedOnTab(tabKey?.toString());
     }
 
     const renderLazyPlaceholder = () => (<Loader />);
@@ -46,12 +47,18 @@ const TabViewComponent: React.FC = () => {
         <View style={style.container}>
             <TabView
                 navigationState={{ index, routes }}
-                renderScene={({ route }) => <VideoList tabKey={route.key} />}
+                renderScene={({ route }) => <VideoList key={index} tabKey={route.key} />}
                 onIndexChange={(index: number) => onTabChange(index)}
                 initialLayout={{ width }}
                 lazy={true}
+                lazyPreloadDistance={0}
                 renderLazyPlaceholder={renderLazyPlaceholder}
-                renderTabBar={(props) => <TabBar {...props} style={style.tabBar} indicatorStyle={style.indicatorStyle} />}
+                renderTabBar={(props) =>
+                    <TabBar {...props}
+                        style={style.tabBar}
+                        indicatorStyle={style.indicatorStyle}
+                    />
+                }
             />
         </View>
     );

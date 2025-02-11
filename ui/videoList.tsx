@@ -25,6 +25,10 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey }) => {
   const viewabilityConfig = { viewAreaCoveragePercentThreshold: 80 };
 
   useEffect(() => {
+    setVisibleVideoId(null);
+  }, [tabKey]);
+
+  useEffect(() => {
     if (videos?.length > 0 && visibleVideoId === null) {
       setVisibleVideoId(videos[0].key);
     }

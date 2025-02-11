@@ -6,6 +6,7 @@ const initialState: VideoState = {
   loading: false,
   error: null,
   page: 1,
+  refreshing: false,
 };
 
 const videoSlice = createSlice({
@@ -18,11 +19,13 @@ const videoSlice = createSlice({
     },
     fetchVideosSuccess: (state, action: PayloadAction<Video[]>) => {
       state.loading = false;
+      state.refreshing = false;
       state.page = state.page + 1;
       state.videos = [...state.videos, ...action.payload];
     },
     fetchVideosFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
+      state.refreshing = false;
       state.error = action.payload;
     },
     setPage: (state, action: PayloadAction<number>) => {
@@ -31,8 +34,11 @@ const videoSlice = createSlice({
     clearVideos: (state) => {
       state.videos = [];
     },
+    setPageRefresh: (state, action: PayloadAction<boolean>) => {
+      state.refreshing = action.payload;
+    },
   },
 });
 
-export const { fetchVideos, fetchVideosSuccess, fetchVideosFailure, setPage, clearVideos } = videoSlice.actions;
+export const { fetchVideos, fetchVideosSuccess, fetchVideosFailure, setPage, clearVideos, setPageRefresh } = videoSlice.actions;
 export default videoSlice.reducer;

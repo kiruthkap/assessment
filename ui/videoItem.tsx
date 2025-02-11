@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import Video from 'react-native-video';
 import Animated, { useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated';
 import { VideoItemProps } from '../types';
@@ -19,6 +19,7 @@ const VideoItem: React.FC<VideoItemProps> = ({ item, isVisible }) => {
 
     return (
         <View style={style.container}>
+            <Text style={[style.titleStyle, isVisible && style.titleContainer]}>{item?.title}</Text>
             <Animated.View style={[style.videoWrapper, animatedStyle]}>
                 <Video
                     source={{ uri: item?.url }}
