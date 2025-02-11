@@ -2,6 +2,7 @@ export const predefinedTexts = {
     title: 'Video Player',
     loading: 'Loading...',
     noVideos: 'Videos not available',
+    headerImageUrl: 'https://cdn.pixabay.com/photo/2021/10/09/12/45/play-button-6694069_1280.png',
 }
 
 export const apiData = {

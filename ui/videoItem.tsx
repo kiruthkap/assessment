@@ -29,8 +29,6 @@ const VideoItem: React.FC<VideoItemProps> = ({ item, isVisible }) => {
                     controls={true}
                     repeat={true}
                     muted={false}
-                    onError={(error) => console.log('Video Error:', error)}
-                    onLoad={() => console.log('Video Loaded:', item.url)}
                 />
             </Animated.View>
         </View>

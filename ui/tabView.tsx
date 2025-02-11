@@ -16,9 +16,9 @@ const TabViewComponent: React.FC = () => {
     const defaultValues = apiData;
     const [index, setIndex] = useState(0);
     const [routes] = useState([
-        { key: '0', title: 'Home' },
-        { key: '1', title: 'Shorts' },
-        { key: '2', title: 'Saved' },
+        { key: '0', title: 'General' },
+        { key: '1', title: 'News' },
+        { key: '2', title: 'Comedy' },
     ]);
     const dispatch = useDispatch();
     const page: number = useSelector((state: RootState) => state?.videoReducer?.page || 0);

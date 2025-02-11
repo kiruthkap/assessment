@@ -31,12 +31,14 @@ export const loaderStyle = StyleSheet.create({
 
 export const headerStyle = StyleSheet.create({
     header: {
+        flexDirection: 'row',
         height: 50,
         backgroundColor: '#f4511e',
         justifyContent: 'center',
         alignItems: 'center',
     },
     headerText: {
+        left: 8,
         color: '#fff',
         fontSize: 20,
         fontWeight: 'bold',
