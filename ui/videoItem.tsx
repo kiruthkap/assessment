@@ -6,11 +6,11 @@ import { VideoItemProps } from '../types';
 import { videoItemStyle } from '../styles';
 
 const VideoItem: React.FC<VideoItemProps> = ({ item, isVisible }) => {
-    const scale = useSharedValue(isVisible ? 1 : 0.9);
+    const scale = useSharedValue(isVisible ? 1 : 0.99);
     const style = videoItemStyle;
 
     useEffect(() => {
-        scale.value = withTiming(isVisible ? 1 : 0.9, { duration: 300 });
+        scale.value = withTiming(isVisible ? 1 : 0.99, { duration: 300 });
     }, [isVisible]);
 
     const animatedStyle = useAnimatedStyle(() => ({
