@@ -21,3 +21,8 @@ export const animationData = {
     TITLE_MAX_SIZE: 24,
     TITLE_MIN_SIZE: 16,
 }
+
+export const colorConstants ={
+    white:'#fff',
+    gray: '#808080'
+}

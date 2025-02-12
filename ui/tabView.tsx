@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Dimensions, Animated } from 'react-native';
+import { Dimensions, Animated, Text, TouchableOpacity } from 'react-native';
 import { TabView, TabBar } from 'react-native-tab-view';
 import VideoList from '../ui/videoList';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,9 +7,10 @@ import { clearVideos, fetchVideos, setPage } from '../features/videoSlice';
 import { appStyle } from '../styles';
 import { RootState } from '../features/store';
 import Loader from '../ui/loader';
-import { animationData, apiData } from '../constants';
+import { animationData, apiData, colorConstants } from '../constants';
 import { TabViewProps } from '../types';
 import { getAnimationBasedOnScroll } from '../utils';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { width } = Dimensions.get('window');
 
@@ -22,9 +23,9 @@ const TabViewComponent: React.FC<TabViewProps> = ({ scrollY }) => {
 
     const [index, setIndex] = useState(0);
     const [routes] = useState([
-        { key: '0', title: 'General' },
-        { key: '1', title: 'News' },
-        { key: '2', title: 'Comedy' },
+        { key: '0', title: 'General', icon: 'home' },
+        { key: '1', title: 'News', icon: 'home' },
+        { key: '2', title: 'Comedy', icon: 'home' },
     ]);
 
     const dispatch = useDispatch();
@@ -60,12 +61,35 @@ const TabViewComponent: React.FC<TabViewProps> = ({ scrollY }) => {
                 lazy={true}
                 lazyPreloadDistance={0}
                 renderLazyPlaceholder={renderLazyPlaceholder}
-                renderTabBar={(props) =>
-                    <TabBar {...props}
+                renderTabBar={(props) => (
+                    <TabBar
+                        {...props}
                         style={style.tabBar}
                         indicatorStyle={style.indicatorStyle}
+                        contentContainerStyle={style.containerStyle}
+                        renderTabBarItem={({ route }) => {
+                            const isFocused = index === parseInt(route.key);
+                            return (
+                                <TouchableOpacity
+                                    activeOpacity={0.7}
+                                    onPress={() => onTabChange(parseInt(route.key))}
+                                    style={style.itemStyle}>
+                                    <Icon
+                                        name={route.icon}
+                                        size={24}
+                                        color={isFocused ? colorConstants.white : colorConstants.gray}
+                                    />
+                                    <Text style={[style.textStyle, {
+                                        color: isFocused ? colorConstants.white : colorConstants.gray,
+                                        fontWeight: isFocused ? 'bold' : 'normal',
+                                    }]}>
+                                        {route.title}
+                                    </Text>
+                                </TouchableOpacity>
+                            );
+                        }}
                     />
-                }
+                )}
             />
         </Animated.View>
     );

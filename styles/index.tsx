@@ -14,6 +14,19 @@ export const appStyle = StyleSheet.create({
         backgroundColor: '#000',
         height: 4,
     },
+    containerStyle: {
+        justifyContent: 'space-around'
+    },
+    itemStyle: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingBottom: 8,
+    },
+    textStyle: {
+        fontSize: 14,
+        marginTop: 4,
+    }
 });
 
 export const loaderStyle = StyleSheet.create({
