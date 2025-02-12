@@ -7,3 +7,7 @@ export const getAnimationBasedOnScroll = (scrollY: Animated.Value, inputMaxHeigh
         extrapolate: 'clamp',
     })
 }
+
+export const checkIsVideo = (url: string) => {
+    return /\.(mp4|mov|avi|mkv)$/i.test(url);
+}

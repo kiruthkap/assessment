@@ -18,27 +18,28 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey, scrollY }) => {
   const isLoading = videosReducerData?.loading || false;
   const refreshing = videosReducerData?.refreshing || false;
 
-  const [visibleVideoId, setVisibleVideoId] = useState<number | null>(null);
+  const [visibleVideoIds, setVisibleVideoIds] = useState<number[]>([]);
 
   const defaultTexts = predefinedTexts;
   const apiDefaultData = apiData;
   const style = videoListStyle;
 
-  const viewabilityConfig = { viewAreaCoveragePercentThreshold: 80 };
+  const viewabilityConfig = { viewAreaCoveragePercentThreshold: 70 };
 
   useEffect(() => {
-    setVisibleVideoId(null);
+    setVisibleVideoIds([]);
   }, [tabKey]);
 
   useEffect(() => {
-    if (videos?.length > 0 && visibleVideoId === null) {
-      setVisibleVideoId(videos[0].key);
+    if (videos?.length > 0 && visibleVideoIds?.length === 0) {
+      setVisibleVideoIds([videos[0].key]);
     }
   }, [videos]);
 
   const onViewableItemsChanged = useCallback(({ viewableItems }: { viewableItems: ViewToken[] }) => {
     if (viewableItems?.length > 0) {
-      setVisibleVideoId(parseInt(viewableItems[0]?.key));
+      const visibleIds = viewableItems.map(item => parseInt(item.key));
+      setVisibleVideoIds(visibleIds);
     }
   }, []);
 
@@ -69,7 +70,7 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey, scrollY }) => {
 
   const loaderView = () => (<Loader />);
 
-  const hendlePaginationBasedOnScroll = useCallback(
+  const handlePaginationBasedOnScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
       const endReached =
@@ -87,27 +88,26 @@ const VideoList: React.FC<VideoListProps> = ({ tabKey, scrollY }) => {
       data={videos}
       keyExtractor={(item) => item?.id?.toString()}
       renderItem={({ item }) => (
-        <VideoItem item={item} isVisible={item?.key === visibleVideoId} />
+        <VideoItem item={item} isVisible={visibleVideoIds.includes(item.key)} />
       )
       }
-      pagingEnabled
       horizontal={false}
-      snapToAlignment="start"
-      decelerationRate="fast"
       showsVerticalScrollIndicator={false}
       viewabilityConfig={viewabilityConfig}
       onViewableItemsChanged={onViewableItemsChanged}
-      onMomentumScrollEnd={hendlePaginationBasedOnScroll}
-      onEndReachedThreshold={0.5}
       ListEmptyComponent={!refreshing ? isLoading ? loaderView() : emptyView() : null}
       style={style.container}
       refreshControl={
         <RefreshControl refreshing={isLoading && refreshing} onRefresh={handleRefresh} />
       }
-      onScroll={Animated.event(
-        [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-        { useNativeDriver: false }
-      )}
+      onScroll={(event: NativeSyntheticEvent<NativeScrollEvent>) => {
+        Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )(event);
+
+        handlePaginationBasedOnScroll(event);
+      }}
     />
   );
 };
